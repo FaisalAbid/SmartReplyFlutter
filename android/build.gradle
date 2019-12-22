@@ -1,0 +1,43 @@
+group 'com.azihsoyn.flutter.mlkit'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.google.gms:google-services:4.3.1'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    aaptOptions {
+        noCompress "tflite"
+    }
+    dependencies {
+        implementation 'com.google.guava:guava:20.0'
+        implementation 'com.google.firebase:firebase-ml-natural-language:22.0.0'
+        implementation 'com.google.firebase:firebase-ml-natural-language-smart-reply-model:20.0.7'
+    }
+}
