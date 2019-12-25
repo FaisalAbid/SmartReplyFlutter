@@ -71,7 +71,7 @@ UIImage* imageFromImageSourceWithData(NSData *data) {
 // Then, for each message sent and received:
 FIRTextMessage *message = [[FIRTextMessage alloc]
         initWithText:call.arguments[@"message"]
-        timestamp:[NSDate date].timeIntervalSince1970
+        timestamp:[call.arguments[@"time"] doubleValue]/1000
          userID:call.arguments[@"userId"]
         isLocalUser:NO];
 [conversation addObject:message];
@@ -81,7 +81,7 @@ FIRTextMessage *message = [[FIRTextMessage alloc]
 // Then, for each message sent and received:
 FIRTextMessage *message = [[FIRTextMessage alloc]
         initWithText:call.arguments[@"message"]
-        timestamp:[NSDate date].timeIntervalSince1970
+        timestamp:[call.arguments[@"time"] doubleValue]/1000
         userID:call.arguments[@"userId"]
         isLocalUser:YES];
 [conversation addObject:message];
@@ -95,8 +95,8 @@ FIRSmartReply *smartReply = [naturalLanguage smartReply];
                            completion:^(FIRSmartReplySuggestionResult * _Nullable res,
                                         NSError * _Nullable error) {
   if (error || !res) {
-   NSLog(@"Error: %@", error);
-  result( [NSMutableArray array]);
+    NSLog(@"Error: %@", error);
+    result( [NSMutableArray array]);
     return;
   }
   if (res.status == FIRSmartReplyResultStatusNotSupportedLanguage) {
@@ -112,6 +112,8 @@ FIRSmartReply *smartReply = [naturalLanguage smartReply];
         NSLog(@"Suggested reply: %@", suggestion.text);
       }
       result(sugg);
+  }else {
+   result( [NSMutableArray array]);
   }
 }];
 }
